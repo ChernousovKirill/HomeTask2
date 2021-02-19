@@ -1,0 +1,45 @@
+@isTest
+public class TestQueCoursesClass {
+
+ @isTest
+    static void firstTestMethod(){
+      
+    String house = 'house';
+    QueCoursesClass qcc = new QueCoursesClass(house, null);
+    Test.startTest();
+    System.enqueueJob(qcc);
+    Test.stopTest();
+    List<House__c> houses = [SELECT Id FROM House__c Where Name =: house];
+    System.assertEquals(0, houses.size());
+    
+
+    }
+
+ @isTest
+    static void secondTestMethod(){
+      
+    String house = 'house12';
+    QueCoursesClass qcc = new QueCoursesClass(house, null);
+    Test.startTest();
+    System.enqueueJob(qcc);
+    Test.stopTest();
+    List<House__c> houses = [SELECT Id FROM House__c Where Name =: house];
+    System.assertEquals(0, houses.size());
+    
+
+    }
+
+@isTest
+    static void thirdTestMethod(){
+      
+    String house = ' ';
+    QueCoursesClass qcc = new QueCoursesClass(house, null);
+    Test.startTest();
+    System.enqueueJob(qcc);
+    Test.stopTest();
+    List<House__c> houses = [SELECT Id FROM House__c Where Name =: house];
+    System.assertEquals(0, houses.size());
+    
+
+    }
+}
