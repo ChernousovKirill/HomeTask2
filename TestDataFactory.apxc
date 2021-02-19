@@ -1,0 +1,53 @@
+@isTest
+public class TestDataFactory {
+
+    public static List<House__c> house(Integer countH , DateTime nowDate, Boolean resetNowDate){
+     
+    List<House__c> houses = new List<House__c>();
+        for(Integer i = 0;i < countH; i++){
+        House__c hs = new House__c(Name='House' + i, Date_Time__c = nowDate);
+        houses.add(hs);
+        }
+   
+    insert houses;
+        if(houses.size() > 0 && resetNowDate) {
+            for(House__c hs : houses){
+                hs.Date_Time__c = null;
+            }
+        update houses;
+        }
+    return houses;
+}
+    
+    public static List<Shop__c> shop(Integer countS,DateTime shopNowDate, Boolean resetShopDateNow){
+   
+     List<Shop__c> shops = new List<Shop__c>();
+        for(Integer k = 0;k < countS;k++){
+            Shop__c shp = new  Shop__c(Name='Shop'+k,Update_Time__c	= shopNowDate);
+            shops.add(shp);
+        }
+         insert shops;
+        if(shops.size()>0 && resetShopDateNow){
+            for(Shop__c shp : shops){
+              shp.Update_Time__c=null;
+            }
+        update shops;
+        }
+     return shops;
+    }
+   
+    public static List<House__c> houseShop(Integer countH, DateTime nowDate, Boolean resetNowDate, Integer countShopForHouse) {
+
+     List <House__c> houses = new List<House__c>();
+     houses = house(countH, nowDate, resetNowDate);
+     List<Shop__c> shops = new List<Shop__c>();
+        for(Integer n = 0; n < countH; n++) {
+            House__c hs = houses[n];
+        for(Integer m = 0; m < countShopForHouse; m++){
+            shops.add(new Shop__c(Name = hs.Name + m, Infrastructure__c = hs.Id));
+            }
+        }
+        insert(shops);
+return houses;
+    }
+}
