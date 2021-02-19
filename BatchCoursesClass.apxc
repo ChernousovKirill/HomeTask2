@@ -1,0 +1,21 @@
+public class BatchCoursesClass implements Database.Batchable<sObject> {
+
+   public Database.QueryLocator start(Database.BatchableContext bc) {
+        return Database.getQueryLocator(
+            'SELECT Id, Number_Children__c FROM House__c');
+    }
+    
+    public void execute(Database.BatchableContext bc, List<House__c> scope){
+        List<House__c> houses = new List<House__c>();
+        for (House__c house : scope) {
+            List<Shop__c> shops = [SELECT Id FROM Shop__c WHERE Infrastructure__c = :house.Id];
+            house.Number_Child__c = shops.size();
+            houses.add(house);
+        }
+        update houses;
+    }
+    public void finish(Database.BatchableContext bc){
+        
+    }
+    
+}
