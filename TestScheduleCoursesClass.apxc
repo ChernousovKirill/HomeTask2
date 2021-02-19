@@ -1,0 +1,52 @@
+@isTest
+public class TestScheduleCoursesClass {
+
+   public static String timeToGo = '20 30 8 10 5 ? 2021';
+
+@isTest
+    static void scheduleWithoutChildren() {
+     
+      List<House__c> houses = TestDataFactory.house(1, null, false);
+      Test.startTest();
+      String jodId = System.schedule('Test', timeToGo , new ScheduleCoursesClass());
+      Test.stopTest();
+      houses =[SELECT Id,Number_Child__c FROM House__c];
+      System.assertEquals(0, houses.get(0).Number_Child__c);
+    }
+
+@isTest
+    static void scheduleWithOneChildren() {
+     
+      List<House__c> houses = TestDataFactory.houseShop(1, null, false, 1);
+      Test.startTest();
+      String jodId = System.schedule('Test', timeToGo , new ScheduleCoursesClass());
+      Test.stopTest();
+      houses =[SELECT Id,Number_Child__c FROM House__c];
+      System.assertEquals(1, houses.get(0).Number_Child__c);
+    }
+
+
+@isTest
+    static void scheduleOneHundredHousesWithTenChildren() {
+     
+      List<House__c> houses = TestDataFactory.houseShop(100, null, false, 10);
+      Test.startTest();
+      String jodId = System.schedule('Test', timeToGo , new ScheduleCoursesClass());
+      Test.stopTest();
+      houses =[SELECT Id,Number_Child__c FROM House__c];
+      for(House__c hs : houses)
+      System.assertEquals(10, hs.Number_Child__c);
+    }
+
+@isTest
+    static void scheduleOneHundredHousesWithOneChildren() {
+     
+      List<House__c> houses = TestDataFactory.houseShop(100, null, false, 1);
+      Test.startTest();
+      String jodId = System.schedule('Test', timeToGo , new ScheduleCoursesClass());
+      Test.stopTest();
+      houses =[SELECT Id,Number_Child__c FROM House__c];
+      for(House__c hs : houses)
+      System.assertEquals(1, hs.Number_Child__c);
+    }
+}
