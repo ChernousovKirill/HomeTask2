@@ -1,0 +1,24 @@
+public class QueCoursesClass implements Queueable {
+  private String name;
+  private Id houseId;
+
+    public QueCoursesClass(String name, Id houseId) {
+      this.name=name;
+      this.houseId=houseId;
+    }
+
+    public void execute(QueueableContext context) {
+        if(houseId == null){
+          House__c house = new House__c(Name = name);
+          Database.insert(house);
+            if(!Test.isRunningTest()){
+        System.enqueueJob(new QueCoursesClass(name, house.Id));
+            }
+        } else {
+          Shop__c shop = new Shop__c(Name = name, Infrastructure__c = houseId);
+          Database.insert(shop);
+        }
+     
+    }
+
+}
