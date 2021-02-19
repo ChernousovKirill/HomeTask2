@@ -1,0 +1,7 @@
+public class ScheduleCoursesClass implements Schedulable{
+  
+    public void execute(SchedulableContext ctx){
+      BatchCoursesClass bcc = new BatchCoursesClass();
+      Database.executeBatch(bcc);
+    }
+}
