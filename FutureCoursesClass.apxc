@@ -1,4 +1,4 @@
-public class CoursesClass {
+public class FutureCoursesClass {
 
  @future
     public static void coursesFutureMethod(String name) {
