@@ -1,0 +1,10 @@
+public class CoursesClass {
+
+ @future
+    public static void coursesFutureMethod(String name) {
+      House__c houses = new House__c(Name = name, Number_Of_Floors__c=15, Adress__c = 'Odessa');
+      System.debug(houses + 'before insert');
+      insert houses;
+      System.debug(houses + 'after insert');
+    }
+}
